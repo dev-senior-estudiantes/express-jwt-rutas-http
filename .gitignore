@@ -1,0 +1,34 @@
+Node.js dependencies
+
+node_modules/ npm-debug.log package-lock.json
+
+Environment variables
+
+.env
+
+Logs
+
+logs/ *.log .log.
+
+Build output
+
+dist/ build/
+
+Editor and IDE files
+
+.vscode/ .idea/ *.sublime-project *.sublime-workspace
+
+Operating system files
+
+.DS_Store Thumbs.db
+
+Temporary files
+
+*.tmp *.temp *.swp
+
+
+# GitHub Copilot prompts (solo ignorar personales)
+.github/prompts/personal/
+.github/prompts/temp/
+*.personal.prompt.md
+
