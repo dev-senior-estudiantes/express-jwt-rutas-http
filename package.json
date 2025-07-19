@@ -1,0 +1,26 @@
+{
+  "name": "express-jwt-rutas-http",
+  "version": "1.0.0",
+  "description": "[![Node.js](https://img.shields.io/badge/Node.js-v18+-green.svg)](https://nodejs.org/)\r [![Express](https://img.shields.io/badge/Express-v5.1.0-blue.svg)](https://expressjs.com/)\r [![JWT](https://img.shields.io/badge/JWT-v9.0.2-orange.svg)](https://jwt.io/)\r [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node --watch server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-senior-estudiantes/express-jwt-rutas-http.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dev-senior-estudiantes/express-jwt-rutas-http/issues"
+  },
+  "homepage": "https://github.com/dev-senior-estudiantes/express-jwt-rutas-http#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
