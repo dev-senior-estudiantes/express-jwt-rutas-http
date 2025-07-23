@@ -181,6 +181,7 @@ cd express-jwt-rutas-http
 
 ```bash
 npm install
+npm init -y 
 ```
 
 3. **Configurar variables de entorno**
