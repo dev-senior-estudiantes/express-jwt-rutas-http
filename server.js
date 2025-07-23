@@ -12,7 +12,6 @@ app.use(requestLogger)
 
 app.use('/', baseRouter)
 
-
 app.listen(config.PORT, () => {
-    console.log('Servidor corriendo en http://localhost:3000')
+  console.log('Servidor corriendo en http://localhost:3000')
 })

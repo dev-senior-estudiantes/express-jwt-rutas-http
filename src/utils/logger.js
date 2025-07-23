@@ -3,10 +3,10 @@ const info = (...args) => {
 }
 
 const error = (...args) => {
-  console.error(...args);
+  console.error(...args)
 }
 
 module.exports = {
   info,
-  error 
+  error
 }
