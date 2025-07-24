@@ -10,8 +10,26 @@ class UserController {
     res.json(users)
   }
 
+  static async getUser (req, res) {
+    const id = req.params.id
+
+    const foundUser = await Model.getById(id)
+
+    if (!foundUser) {
+      return res.status(404).json({ error: 'user does not found' })
+    }
+
+    res.json(foundUser)
+  }
+
   static async createUser (req, res) {
     const input = Validator.validator(req.body)
+
+    const foundUser = await Model.getByEmail(input.email)
+
+    if (foundUser) {
+      return res.status(400).json({ error: 'email already taken' })
+    }
 
     const saltRounds = config.SALT_ROUNDS | 10
     const hashedPassword = await bcrypt.hash(input.password, saltRounds)

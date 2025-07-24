@@ -31,11 +31,23 @@ class User {
     return await manageJSON.writeContent(dataPath, '[]')
   }
 
-  static async getById (id, data) {
-    if (!data) {
-      data = await this.getData()
-    }
+  static async getById (id) {
+    const data = await this.getData()
     const foundUser = data.find(user => user.id === id)
+    if (!foundUser) {
+      return false
+    }
+
+    return this.prepare(foundUser)
+  }
+
+  static async getByEmail (email) {
+    const users = await this.getData()
+    const foundUser = users.find(user => user.email === email)
+    if (!foundUser) {
+      return false
+    }
+
     return this.prepare(foundUser)
   }
 

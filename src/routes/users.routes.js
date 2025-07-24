@@ -5,6 +5,8 @@ const UsersController = require('../controllers/users.controller')
 
 router.get('/', UsersController.getAll)
 
+router.get('/:id', UsersController.getUser)
+
 router.post('/', UsersController.createUser)
 
 router.delete('/:id', UsersController.deleteUser)
