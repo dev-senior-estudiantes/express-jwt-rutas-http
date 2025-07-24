@@ -40,7 +40,21 @@ function validator ({ name, email, password }) {
 }
 
 function validatorPartial ({ name, email, password }) {
-  return { name, email, password }
+  const validData = { name, email, password }
+
+  if (typeof name === 'undefined') {
+    delete validData.name
+  }
+
+  if (typeof email === 'undefined') {
+    delete validData.email
+  }
+
+  if (typeof password === 'undefined') {
+    delete validData.password
+  }
+
+  return validData
 }
 
 class ValidationError {
