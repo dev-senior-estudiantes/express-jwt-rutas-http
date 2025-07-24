@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt')
 
+const config = require('../utils/config')
+const Validator = require('../utils/validator')
 const Model = require('../model/users.model')
 
 class UserController {
@@ -9,9 +11,10 @@ class UserController {
   }
 
   static async createUser (req, res) {
-    const input = UserController.validator(req.body)
+    const input = Validator.validator(req.body)
 
-    const hashedPassword = await bcrypt.hash(input.password, 10)
+    const saltRounds = config.SALT_ROUNDS | 10
+    const hashedPassword = await bcrypt.hash(input.password, saltRounds)
 
     const user = {
       ...input,
@@ -32,11 +35,12 @@ class UserController {
   }
 
   static async updateUser (req, res) {
-    const input = UserController.validatorPartial(req.body)
+    const input = Validator.validatorPartial(req.body)
     const id = req.params.id
 
     if (input.password) {
-      input.password = bcrypt.hash(input.password, 10)
+      const saltRounds = config.SALT_ROUNDS | 10
+      input.password = await bcrypt.hash(input.password, saltRounds)
     }
 
     const updatedUser = await Model.getByIdAndUpdate(id, input)
@@ -46,14 +50,6 @@ class UserController {
     }
 
     res.json(updatedUser)
-  }
-
-  static validator ({ name, email, password }) {
-    return { name, email, password }
-  }
-
-  static validatorPartial ({ name, email, password }) {
-    return { name, email, password }
   }
 }
 
