@@ -1,7 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { registrar_usuario, iniciar_sesion, ruta_protegida } = require('../controllers/authcontroller');
-const verificar_token = require('../middleware/authMiddleware');
+const {
+  registrarUsuario,
+  iniciarSesion,
+  rutaProtegida,
+} = require("../controllers/authController"); // Se actualizo el nombre del modulo authController en routes y se importa las funciones en camelCase
+const verificarToken = require("../middleware/authMiddleware"); //  se importa la VerificarToken
 
-router.get('/protected', verificar_token, ruta_protegida);
-
+// Rutas de autenticación, usando verificarToken como middleware para proteger las rutas y rutaProtegida como controlador
+router.get("/protected", verificarToken, rutaProtegida); // rutas en camelCase

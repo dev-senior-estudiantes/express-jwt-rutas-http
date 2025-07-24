@@ -1,56 +1,76 @@
-const jwt = require('jsonwebtoken'); //importa jwt module
-const bcrypt = require('bcrypt'); //importa bcrypt module
-const users = require('../config/db'); //importa el users
+const jwt = require("jsonwebtoken"); //importa jwt module
+const bcrypt = require("bcrypt"); //importa bcrypt module
+const users = require("../config/db"); //importa el users
 
-//fucnion para registara un nuevo usuario 
-const registrar_usuario = async (req, res) => {
-    const {usuario, contraseña } = req.body; 
-    const passwordHasheada = await bcrypt.hash(password, 10);  //Hashear la contraseña
-    users.push({ usuario, contraseña: passwordHasheada }); //agrega el usuario al array
-    return res.status(201).json({ message: 'Usuario registrado' });
-    return res.status(4001).json({ error: 'Error al registrar' });
-}
+// Funcion para registara un nuevo usuario
+//  Nombre de Funciones y variables camelCase, la primer letra de la segunda palabra en Mayuscula.
+const registrarUsuario = async (req, res) => {
+  const { username, password } = req.body; // Cambiar variables en ingles.
 
-//validacion de datos
-if (!usuario || !contraseña) {
-    return res.status(400).json({ error: 'Usuario y contraseña obligatorio' });
-}
+  // Validacion de datos, usar las variables en ingles
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ error: "Username and password are required" });
+  }
 
-//verifica si existe
-const usuarioexiste = users.find(u => u.usuario === usuario);
-if (usuarioexiste) {
-    return res.status(400).json({ error: 'Usuario ya existe' });
-}
+  //verifica si existe el usuario
+  // Si el usuario existe, retorna un error
+  // variables de username
+  const usuarioexiste = users.find((u) => u.username === username);
+  if (usuarioexiste) {
+    return res.status(400).json({ error: "Username already exists" });
+  }
 
-//login usuario
-const iniciar_sesion = async (req, res) => {
-    const { usuario, contraseña } = req.body; //obtiene los datos del body
-
-//busca usuario 
-const usuarioEncontrado = users.find(u => u.usuario === usuario);
-if (!usuarioEncontrado) {
-    return res.status(400).json({ error: 'Usuario no encontrado' });
-}
-
-//verifica contraseña
-const contraseñaValida = await bcrypt.compare(contraseña, usuarioEncontrado.contraseña);
-if (!contraseñaValida) {
-    return res.status(400).json({ error: 'Contraseña incorrecta' });
-}
-
-const pyload = { usuario: usuarioEncontrado.usuario }; //payload del token
-const token
-    = jwt.sign(pyload, 'mi_clave_secreta', { expiresIn: '1h' }); //firma el token
-return res.status(200).json({ token }); //retorna el token
-}
-
-const rutaProtegida = (req, res) => {
-    return res.status(200).json({ message: 'Ruta protegida accedida' });
-}   
-//exporta las funciones
-module.exports = {
-    registrar_usuario,
-    iniciar_sesion
+  // Hashear la contraseña
+  // bcrypt.hash es una funcion asincrona, por lo que debemos usar await
+  // y la variable debe ser declarada como const
+  const passwordHasheada = await bcrypt.hash(password, 10);
+  users.push({ username, password: passwordHasheada }); //agrega el usuario al array
+  return res.status(201).json({ message: "User registered successfully" });
+  //   return res.status(4001).json({ error: "Error al registrar" }); // El Error 4001 no existe, recuerda los metodos http
 };
 
+// Login usuario <camelCase>, nombre variables en ingles
+// Esta funcion inicia sesion y retorna un token
+const iniciarSesion = async (req, res) => {
+  const { username, password } = req.body; //obtiene los datos del body
 
+  // Busca usuario, Si no existe el usuario, retorna un error
+  const usuarioEncontrado = users.find((u) => u.username === username);
+  if (!usuarioEncontrado) {
+    return res.status(400).json({ error: "Invalid credentials" });
+  }
+
+  // Verifica contraseña
+  // bcrypt.compare es una funcion asincrona, por lo que debemos usar await
+  // y la variable debe ser declarada como const
+  const passwordValida = await bcrypt.compare(
+    password,
+    usuarioEncontrado.password
+  );
+  if (!passwordValida) {
+    return res.status(400).json({ error: "Invalid credentials" });
+  }
+
+  // Usaste pyload y es payload, pero debemos usar el token
+  const token = jwt.sign(
+    { username: usuarioEncontrado.username }, //payload del token
+    JWT_SECRET,
+    { expiresIn: "1h" }
+  );
+  return res.status(200).json({ token, message: "Login successful" }); //retorna el token
+};
+//
+const rutaProtegida = (req, res) => {
+  return res
+    .status(200)
+    .json({ message: "This is a protected route", user: req.user });
+};
+// Se actualizo para exportar las funciones
+// y no el objeto completo
+module.exports = {
+  registrarUsuario,
+  iniciarSesion,
+  rutaProtegida,
+};
