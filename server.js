@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // archivos estaticos p
 //esta es la ruta de autenticacion
 app.use('/api/auth', authRoutes)
 
-//esta es la ruta de autenticacion 
+//esta es la ruta principal 
 app.get('/', (res, req) =>{
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
 });

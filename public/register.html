@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body class="body-oscar">
+    <header class="header-oscar">
+      <nav class="nav-oscar">
+        <a class="a-oscar" href="index.html">Inicio</a>
+        <a class="a-oscar" href="register.html">Registro</a>
+        <a class="a-oscar" href="login.html">Login</a>
+        <a class="a-oscar" href="dasboard.html">Usuario</a>
+      </nav>
+    </header>
+    <div class="container-main-oscar">
+      <main class="container-oscar container-form-oscar">
+        <h2>Crear Cuenta</h2>
+        <form id="registerForm">
+          <input
+            class="input-oscar"
+            type="text"
+            placeholder="Nombre de usuario"
+            required
+          />
+          <input
+            class="input-oscar"
+            type="email"
+            placeholder="Correo electrónico"
+            required
+          />
+          <input
+            class="input-oscar"
+            type="password"
+            placeholder="Contraseña"
+            required
+          />
+          <button type="submit" class="btn">Registrarse</button>
+        </form>
+        <p class="text-oscar">
+          ¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a>
+        </p>
+      </main>
+    </div>
+  </body>
+</html>
