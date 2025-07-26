@@ -1,3 +1,5 @@
+let idToDelete
+
 window.onload = async () => {
   const token = window.localStorage.getItem('sessionToken')
   if (!token) {
@@ -20,6 +22,38 @@ window.onload = async () => {
 
   document.querySelector('.main').style.display = 'block'
 
+  await renderUsers()
+
+  const deleteConfirmBttn = document.querySelector('.acceptDelete')
+  const deleteCancelBttn = document.querySelector('.cancelDelete')
+
+  deleteConfirmBttn.onclick = confirmDelete
+  deleteCancelBttn.onclick = cancelDelete
+}
+
+const openDeleteDialog = (id) => {
+  idToDelete = id
+  const deleteDialog = document.querySelector('.deleteDialog')
+  deleteDialog.showModal()
+}
+
+const confirmDelete = async () => {
+  const deleteDialog = document.querySelector('.deleteDialog')
+  console.log(idToDelete)
+  await fetch(`/api/users/${idToDelete}`, {
+    method: 'DELETE'
+  })
+  renderUsers()
+  openDeleteDialog(idToDelete)
+  deleteDialog.close()
+}
+
+const cancelDelete = () => {
+  const deleteDialog = document.querySelector('.deleteDialog')
+  deleteDialog.close()
+}
+
+const renderUsers = async () => {
   const users = await fetch('http://localhost:3000/api/users')
     .then(response => response.json())
 
@@ -37,7 +71,7 @@ window.onload = async () => {
               </a>
             </div>
             <div class="svg-action">
-              <a href="#" class="delete-button">
+              <a href="#" onclick="openDeleteDialog('${user.id}')" class="delete-button">
                 <i class="fas fa-trash-alt" aria-hidden="true"></i>
               </a>
             </div>
