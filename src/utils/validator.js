@@ -30,8 +30,8 @@ function validator ({ name, email, password }) {
   }
 
   if (name && email && password) {
-    if (name.length < 3 || name.length > 20) {
-      const message = 'name must be 3-20 characters'
+    if (name.length < 3 || name.length > 50) {
+      const message = 'name must be 3-50 characters'
       errors.name = new ValidationError(message)
       messages.push(message)
     }
@@ -53,7 +53,6 @@ function validator ({ name, email, password }) {
     const finalMessage = messages.join(', ')
     const error = new ValidationError(finalMessage)
     error.errors = errors
-    // console.log(errors)
     throw error
   }
 
@@ -61,18 +60,45 @@ function validator ({ name, email, password }) {
 }
 
 function validatorPartial ({ name, email, password }) {
+  const errors = {}
+  const messages = []
   const validData = { name, email, password }
 
   if (typeof name === 'undefined') {
     delete validData.name
+  } else {
+    if (name.length < 3 || name.length > 50) {
+      const message = 'name must be 3-50 characters'
+      errors.name = new ValidationError(message)
+      messages.push(message)
+    }
   }
 
   if (typeof email === 'undefined') {
     delete validData.email
+  } else {
+    if (!(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(email))) {
+      const message = 'invalid email'
+      errors.email = new ValidationError(message)
+      messages.push(message)
+    }
   }
 
   if (typeof password === 'undefined') {
     delete validData.password
+  } else {
+    if (password.length < 3 || password.length > 20) {
+      const message = 'password must be 3-20 characters'
+      errors.password = new ValidationError(message)
+      messages.push(message)
+    }
+  }
+
+  if (messages.length > 0) {
+    const finalMessage = messages.join(', ')
+    const error = new ValidationError(finalMessage)
+    error.errors = errors
+    throw error
   }
 
   return validData

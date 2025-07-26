@@ -44,6 +44,55 @@
       <button class="acceptDelete">Si</button>
       <button class="cancelDelete">No</button>
     </dialog>
+
+    <dialog class="updateDialog">
+      <div class="form">
+        <h1 class="title">Editar</h1>
+        <form id="updateForm" method="post">
+          <label for="name">Nombre:</label>
+          <div class="input-group">
+            <div class="svg-input">
+              <i class="fas fa-user" style="line-height: inherit"></i>
+            </div>
+            <input
+              type="text"
+              id="name"
+              autocomplete="name"
+              placeholder="Ingrese nombre"
+            />
+          </div>
+          <br />
+          <label for="email">Correo electrónico:</label>
+          <div class="input-group">
+            <div class="svg-input">
+              <i class="fas fa-envelope" style="line-height: inherit"></i>
+            </div>
+            <input
+              type="email"
+              id="email"
+              autocomplete="email"
+              placeholder="Ingrese correo"
+            />
+          </div>
+          <br />
+          <label for="pass">Contraseña:</label>
+          <div class="input-group">
+            <div class="svg-input">
+              <i class="fas fa-lock" style="line-height: inherit"></i>
+            </div>
+            <input
+              type="password"
+              id="pass"
+              autocomplete="current-password"
+              placeholder="Ingrese contraseña"
+            />
+          </div>
+          <br />
+          <button class="acceptUpdate" type="submit">Aceptar</button>
+          <button class="cancelUpdate" type="button">Cancelar</button>
+        </form>
+      </div>
+    </dialog>
     </section>
   </body>
 </html>

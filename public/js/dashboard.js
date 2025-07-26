@@ -1,4 +1,7 @@
 let idToDelete
+let idToUpdate
+
+const $ = el => document.querySelector(el)
 
 window.onload = async () => {
   const token = window.localStorage.getItem('sessionToken')
@@ -7,7 +10,7 @@ window.onload = async () => {
     return
   }
 
-  const access = await fetch('http://localhost:3000/api/verify', {
+  const access = await fetch('/api/verify', {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -20,41 +23,97 @@ window.onload = async () => {
     return
   }
 
-  document.querySelector('.main').style.display = 'block'
+  $('.main').style.display = 'block'
 
   await renderUsers()
 
-  const deleteConfirmBttn = document.querySelector('.acceptDelete')
-  const deleteCancelBttn = document.querySelector('.cancelDelete')
+  const deleteConfirmBttn = $('.acceptDelete')
+  const deleteCancelBttn = $('.cancelDelete')
+  const updateForm = $('#updateForm')
+  const updateCancelBttn = $('.cancelUpdate')
 
   deleteConfirmBttn.onclick = confirmDelete
   deleteCancelBttn.onclick = cancelDelete
+
+  updateForm.addEventListener('submit', async (e) => await confirmUpdate(e))
+  updateCancelBttn.onclick = cancelUpdate
 }
 
-const openDeleteDialog = (id) => {
+const openDeleteDialog = (id) => { // eslint-disable-line 
   idToDelete = id
-  const deleteDialog = document.querySelector('.deleteDialog')
+  const deleteDialog = $('.deleteDialog')
   deleteDialog.showModal()
 }
 
 const confirmDelete = async () => {
-  const deleteDialog = document.querySelector('.deleteDialog')
+  const deleteDialog = $('.deleteDialog')
   console.log(idToDelete)
   await fetch(`/api/users/${idToDelete}`, {
     method: 'DELETE'
   })
   renderUsers()
-  openDeleteDialog(idToDelete)
   deleteDialog.close()
 }
 
 const cancelDelete = () => {
-  const deleteDialog = document.querySelector('.deleteDialog')
+  idToDelete = null
+  const deleteDialog = $('.deleteDialog')
   deleteDialog.close()
 }
 
+const openUpdateDialog = async (id) => { // eslint-disable-line 
+  idToUpdate = id
+  const updateDialog = $('.updateDialog')
+  try {
+    const user = await fetch(`/api/users/${idToUpdate}`).then(response => response.json())
+    $('#name').value = user.name
+    $('#email').value = user.email
+    updateDialog.showModal()
+  } catch (error) {
+  }
+}
+
+const confirmUpdate = async (event) => {
+  event.preventDefault()
+  const updateDialog = $('.updateDialog')
+  console.log(idToUpdate)
+  const name = $('#name').value
+  const email = $('#email').value
+  const password = $('#pass').value
+
+  const user = {
+    name,
+    email,
+    password
+  }
+
+  console.log(user)
+
+  const response = await fetch(`/api/users/${idToUpdate}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+  }).then(result => result.json())
+
+  console.log(response)
+
+  if (response.error) {
+    return
+  }
+  renderUsers()
+  updateDialog.close()
+}
+
+const cancelUpdate = () => {
+  idToUpdate = null
+  const updateDialog = $('.updateDialog')
+  updateDialog.close()
+}
+
 const renderUsers = async () => {
-  const users = await fetch('http://localhost:3000/api/users')
+  const users = await fetch('/api/users')
     .then(response => response.json())
 
   const usersHtml = users.map((user, i) => {
@@ -66,7 +125,7 @@ const renderUsers = async () => {
           <td>${date}</td>
           <td class="actions">
             <div class="svg-action">
-              <a href="#" class="update-button">
+              <a href="#" onclick="openUpdateDialog('${user.id}')" class="update-button">
                 <i class="fas fa-pencil-alt" aria-hidden="true"></i>
               </a>
             </div>
@@ -79,7 +138,7 @@ const renderUsers = async () => {
         </tr>`
   }).join('')
 
-  document.querySelector('.users').innerHTML = usersHtml
+  $('.users').innerHTML = usersHtml
 
   console.log(users)
 }
