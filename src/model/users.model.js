@@ -21,10 +21,10 @@ class User {
       ...input
     }
 
-    const users = await this.getAll()
+    const users = await this.getData()
     const usersActual = users.concat(newUser)
     await manageJSON.writeContent(dataPath, JSON.stringify(usersActual, '', 2))
-    return this.prepare(newUser)
+    return this.getAll()
   }
 
   static async deleteAll () {

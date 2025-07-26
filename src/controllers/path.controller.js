@@ -11,7 +11,7 @@ class PathController {
   }
 
   static logoutPage (req, res) {
-    res.send('<h1>Salir</h1>')
+    res.sendFile(path.join(__dirname, publicPath, 'salir.html'))
   }
 
   static notFoundPage (req, res) {

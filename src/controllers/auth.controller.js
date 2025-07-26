@@ -39,7 +39,7 @@ class AuthController {
     const input = Validator.validatorPartial(req.body)
     const user = await Model.getByEmail(input.email)
 
-    if (!user) {
+    if (!user || !input.password) {
       return res.status(401).json({ error: 'invalid credentials' })
     }
 
@@ -57,6 +57,13 @@ class AuthController {
     }
 
     res.json(response)
+  }
+
+  static async verify (req, res) {
+    const id = req.user.id
+    const user = await Model.getById(id)
+
+    res.json(user)
   }
 }
 

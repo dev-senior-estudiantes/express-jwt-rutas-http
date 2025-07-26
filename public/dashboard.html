@@ -9,6 +9,7 @@
       src="https://kit.fontawesome.com/1aea771cf6.js"
       crossorigin="anonymous"
     ></script>
+    <script src="/js/dashboard.js"></script>
     <title>Registro</title>
   </head>
 
@@ -18,12 +19,12 @@
       <ul id="menu">
         <li><a href="/register">Registro</a></li>
         <li><a href="/login">Ingreso</a></li>
-        <li class="active"><a href="/dashboard">Inicio</a></li>
+        <li class="active" style="view-transition-name: nav;"><a href="/dashboard">Inicio</a></li>
         <li><a href="/logout">Salir</a></li>
       </ul>
     </nav>
 
-    <section style="view-transition-name: main"></section>
+    <section class="main" style="view-transition-name: main; display: none;">
     <table class="table-users">
       <thead>
         <tr>
@@ -34,28 +35,9 @@
           <th>Acciones</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- <% users.forEach((user, i) => { %>
-        <tr>
-          <td><%= i + 1 %></td>
-          <td><%= user.name %></td>
-          <td><%= user.email %></td>
-          <td><%= user.date %></td>
-          <td class="actions">
-            <div class="svg-action">
-              <a href="#" class="update-button"
-                ><i class="fas fa-pencil-alt" aria-hidden="true"></i
-              ></a>
-            </div>
-            <div class="svg-action">
-              <a href="#" class="delete-button"
-                ><i class="fas fa-trash-alt" aria-hidden="true"></i
-              ></a>
-            </div>
-          </td>
-        </tr>
-        <% }) %> -->
+      <tbody class="users">
       </tbody>
     </table>
+    </section>
   </body>
 </html>

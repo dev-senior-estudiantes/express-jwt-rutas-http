@@ -1,9 +1,16 @@
 [
   {
-    "id": "765042ee-9394-4e7a-b78a-6af15576e49a",
-    "name": "Deko",
-    "email": "emaildediego@gmail.com",
-    "password": "$2b$10$d3XgsYXybEsubW1eLZg06ugw8O2/S2RKEyGfwrYLhlfle2DGBTddy",
-    "date": "2025-07-24T20:50:42.928Z"
+    "id": "65c945d9-9e02-4f33-9a12-59e41362b033",
+    "name": "Diego Mauricio Ortiz Sanchez",
+    "email": "dmortizs2023@gmail.com",
+    "password": "$2b$10$nadNjnQRFbfZFEMiyGfYL.5lLLe4q8GedQfdK0FZulmbOWjtCnQm.",
+    "date": "2025-07-25T20:47:00.267Z"
+  },
+  {
+    "id": "320bca17-5aef-40ec-8f38-747a533e7ce3",
+    "name": "Oscar",
+    "email": "correodeoscar@gmail.com",
+    "password": "$2b$10$WefTawnb1NojEkoWLuvwyeb0NGiN55frhCPUMgsM7235SdvmrhTEu",
+    "date": "2025-07-26T02:30:00.238Z"
   }
 ]
