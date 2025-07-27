@@ -29,7 +29,4 @@ app.listen(PORT, () => {
   //
 });
 
-<<<<<<< HEAD
-=======
 // Nota revisar los middleware para recibir los archivos estaticos
->>>>>>> 26c4259c886388de304257265c99a78a3e7619a0
