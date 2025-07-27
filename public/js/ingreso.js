@@ -1,9 +1,12 @@
+import * as errorHandler from './errorHandler.js'
+
 const $ = el => document.querySelector(el)
 
 const form = $('#loginForm')
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault()
+  errorHandler.clearErrors()
 
   const email = $('#email').value
   const password = $('#pass').value
@@ -13,8 +16,6 @@ form.addEventListener('submit', async (e) => {
     password
   }
 
-  console.log(user)
-
   const response = await fetch('/login', {
     method: 'POST',
     headers: {
@@ -23,9 +24,8 @@ form.addEventListener('submit', async (e) => {
     body: JSON.stringify(user)
   }).then(result => result.json())
 
-  console.log(response)
-
   if (response.error) {
+    errorHandler.loginErrors(response.error)
     return
   }
 

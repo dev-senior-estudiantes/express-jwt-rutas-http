@@ -145,3 +145,10 @@ nav {
 
     }
 }
+
+.erroInfo {
+    background-color: #ffe1e1;
+    color: red;
+    border: 1px solid red;
+    margin-top: 0;
+}

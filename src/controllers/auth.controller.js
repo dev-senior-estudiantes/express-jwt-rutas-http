@@ -12,7 +12,7 @@ class AuthController {
     const foundUser = await Model.getByEmail(input.email)
 
     if (foundUser) {
-      return res.status(400).json({ error: 'email already taken' })
+      return res.status(400).json({ error: { email: 'email already taken' } })
     }
 
     const saltRounds = config.SALT_ROUNDS | 10

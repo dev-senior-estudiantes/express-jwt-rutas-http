@@ -9,7 +9,8 @@
       src="https://kit.fontawesome.com/1aea771cf6.js"
       crossorigin="anonymous"
     ></script>
-    <script src="/js/dashboard.js"></script>
+    <script type="module" src="/js/dashboard.js"></script>
+    <script type="module" src="/js/errorHandler.js"></script>
     <title>Registro</title>
   </head>
 
@@ -19,80 +20,81 @@
       <ul id="menu">
         <li><a href="/register">Registro</a></li>
         <li><a href="/login">Ingreso</a></li>
-        <li class="active" style="view-transition-name: nav;"><a href="/dashboard">Inicio</a></li>
+        <li class="active" style="view-transition-name: nav">
+          <a href="/dashboard">Inicio</a>
+        </li>
         <li><a href="/logout">Salir</a></li>
       </ul>
     </nav>
 
-    <section class="main" style="view-transition-name: main; display: none;">
-    <table class="table-users">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Nombre</th>
-          <th>Email</th>
-          <th>Fecha de creacion</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody class="users">
-      </tbody>
-    </table>
+    <section class="main" style="view-transition-name: main; display: none">
+      <table class="table-users">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Fecha de creacion</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="users"></tbody>
+      </table>
 
-    <dialog class="deleteDialog">
-      <p>¿Estas seguro de eliminar al usuario?</p>
-      <button class="acceptDelete">Si</button>
-      <button class="cancelDelete">No</button>
-    </dialog>
+      <dialog class="deleteDialog">
+        <p>¿Estas seguro de eliminar al usuario?</p>
+        <button class="acceptDelete">Si</button>
+        <button class="cancelDelete">No</button>
+      </dialog>
 
-    <dialog class="updateDialog">
-      <div class="form">
-        <h1 class="title">Editar</h1>
-        <form id="updateForm" method="post">
-          <label for="name">Nombre:</label>
-          <div class="input-group">
-            <div class="svg-input">
-              <i class="fas fa-user" style="line-height: inherit"></i>
+      <dialog class="updateDialog">
+        <div class="form">
+          <h1 class="title">Editar</h1>
+          <form id="updateForm" method="post">
+            <label for="name">Nombre:</label>
+            <div class="input-group">
+              <div class="svg-input">
+                <i class="fas fa-user" style="line-height: inherit"></i>
+              </div>
+              <input
+                type="text"
+                id="name"
+                autocomplete="name"
+                placeholder="Ingrese nombre"
+              />
             </div>
-            <input
-              type="text"
-              id="name"
-              autocomplete="name"
-              placeholder="Ingrese nombre"
-            />
-          </div>
-          <br />
-          <label for="email">Correo electrónico:</label>
-          <div class="input-group">
-            <div class="svg-input">
-              <i class="fas fa-envelope" style="line-height: inherit"></i>
+            <p id="errorName"></p>
+            <label for="email">Correo electrónico:</label>
+            <div class="input-group">
+              <div class="svg-input">
+                <i class="fas fa-envelope" style="line-height: inherit"></i>
+              </div>
+              <input
+                type="email"
+                id="email"
+                autocomplete="email"
+                placeholder="Ingrese correo"
+              />
             </div>
-            <input
-              type="email"
-              id="email"
-              autocomplete="email"
-              placeholder="Ingrese correo"
-            />
-          </div>
-          <br />
-          <label for="pass">Contraseña:</label>
-          <div class="input-group">
-            <div class="svg-input">
-              <i class="fas fa-lock" style="line-height: inherit"></i>
+            <p id="errorEmail"></p>
+            <label for="pass">Contraseña:</label>
+            <div class="input-group">
+              <div class="svg-input">
+                <i class="fas fa-lock" style="line-height: inherit"></i>
+              </div>
+              <input
+                type="password"
+                id="pass"
+                autocomplete="current-password"
+                placeholder="Ingrese contraseña"
+              />
             </div>
-            <input
-              type="password"
-              id="pass"
-              autocomplete="current-password"
-              placeholder="Ingrese contraseña"
-            />
-          </div>
-          <br />
-          <button class="acceptUpdate" type="submit">Aceptar</button>
-          <button class="cancelUpdate" type="button">Cancelar</button>
-        </form>
-      </div>
-    </dialog>
+            <p id="errorPass"></p>
+            <button class="acceptUpdate" type="submit">Aceptar</button>
+            <button class="cancelUpdate" type="button">Cancelar</button>
+          </form>
+        </div>
+      </dialog>
     </section>
   </body>
 </html>

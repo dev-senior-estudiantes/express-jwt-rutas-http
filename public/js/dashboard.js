@@ -1,3 +1,5 @@
+import * as errorHandler from './errorHandler.js'
+
 let idToDelete
 let idToUpdate
 
@@ -18,7 +20,6 @@ window.onload = async () => {
 
   if (access.error) {
     window.localStorage.removeItem('sessionToken')
-    console.log(':p')
     window.location.href = '/register'
     return
   }
@@ -47,7 +48,6 @@ const openDeleteDialog = (id) => { // eslint-disable-line
 
 const confirmDelete = async () => {
   const deleteDialog = $('.deleteDialog')
-  console.log(idToDelete)
   await fetch(`/api/users/${idToDelete}`, {
     method: 'DELETE'
   })
@@ -75,8 +75,8 @@ const openUpdateDialog = async (id) => { // eslint-disable-line
 
 const confirmUpdate = async (event) => {
   event.preventDefault()
+  errorHandler.clearErrors()
   const updateDialog = $('.updateDialog')
-  console.log(idToUpdate)
   const name = $('#name').value
   const email = $('#email').value
   const password = $('#pass').value
@@ -87,8 +87,6 @@ const confirmUpdate = async (event) => {
     password
   }
 
-  console.log(user)
-
   const response = await fetch(`/api/users/${idToUpdate}`, {
     method: 'PUT',
     headers: {
@@ -97,9 +95,8 @@ const confirmUpdate = async (event) => {
     body: JSON.stringify(user)
   }).then(result => result.json())
 
-  console.log(response)
-
   if (response.error) {
+    errorHandler.formErrors(response.error)
     return
   }
   renderUsers()
@@ -125,12 +122,12 @@ const renderUsers = async () => {
           <td>${date}</td>
           <td class="actions">
             <div class="svg-action">
-              <a href="#" onclick="openUpdateDialog('${user.id}')" class="update-button">
+              <a href="#" class="update-button">
                 <i class="fas fa-pencil-alt" aria-hidden="true"></i>
               </a>
             </div>
             <div class="svg-action">
-              <a href="#" onclick="openDeleteDialog('${user.id}')" class="delete-button">
+              <a href="#" class="delete-button">
                 <i class="fas fa-trash-alt" aria-hidden="true"></i>
               </a>
             </div>
@@ -140,5 +137,6 @@ const renderUsers = async () => {
 
   $('.users').innerHTML = usersHtml
 
-  console.log(users)
+  document.querySelectorAll('.update-button').forEach((el, i) => { el.onclick = () => { openUpdateDialog(users[i].id) } })
+  document.querySelectorAll('.delete-button').forEach((el, i) => { el.onclick = () => { openDeleteDialog(users[i].id) } })
 }
