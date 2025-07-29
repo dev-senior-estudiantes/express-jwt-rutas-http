@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const authRoutes = require('authRoutes');
 const { send } = require('process');
 
+
 //configuracion inicial 
 dotenv.config();
 const app = express();
