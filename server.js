@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
-const authRoutes = require('authRoutes');
+const authRoutes = require('./src/routes/authRoutes');
 const { send } = require('process');
 
 
@@ -12,7 +12,8 @@ const app = express();
 
 //uso de Meddleware
 app.use(express.json()) //parsea el cuerpo del JSON y lo pasa a obj
-app.use(express.static(path.join(__dirname, 'public'))); // archivos estaticos publicos
+app.use(express.static(path.join(__dirname, 'public'))); // archivos estaticos publico
+app.use()
 
 //esta es la ruta de autenticacion
 app.use('/api/auth', authRoutes)
